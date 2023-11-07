@@ -4,15 +4,17 @@ import './App.css';
 import { Busca } from '../../Types/busca';
 import { Collect } from '../../Collect/Collect'
 import { GetData } from '../../Container/Buscador'
+import { Save } from '../../Container/Save'
 import Tabela from '../Tabela/Components/Tabela';
 
 function App() {
-  const [data, setData] = useState<Busca[] | null>(null)
+  const [executa, setExecuta] = useState<boolean>(false)
+  const [data, setData] = useState<Busca[]>([])
 
   useEffect(() => {
+    if(executa == false){return}
 
     async function GetAsync() {
-
       var result: Busca[] = [];
 
       for (const busca of Collect) {
@@ -24,20 +26,26 @@ function App() {
     }
 
     GetAsync();
+  }, [executa])
 
-
+  useEffect(() => {
+    setExecuta(true);
   }, [])
+
 
   return (
     <div className="App">
-      {data == null ?
+      {data.length == 0 ?
         (
           <h1>Carregando</h1>
         ) :
         (
+          <>
+          <button onClick={()=>Save()}>Baixar</button>
           <Tabela
             data={data}
           />
+          </>
 
         )
       }

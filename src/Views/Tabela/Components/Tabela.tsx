@@ -3,13 +3,14 @@ import logo from './logo.svg';
 import { Busca } from '../../../Types/busca';
 
 interface props {
-  data?: Busca[]
+  data: Busca[]
 }
 
 
 function Tabela(props: props) {
 
   useEffect(() => {
+    if(props.data.length == 0){return}
     console.log("DATA")
     console.log(props.data)
   }, [props.data]
@@ -23,20 +24,22 @@ function Tabela(props: props) {
           <th>Nome</th>
           <th>Url</th>
           <th>Valor</th>
+          <th>Detalhes</th>
         </tr>
       </thead>
       <tbody>
-        {props.data && props.data.map((valor, i) =>
+        {props.data && props.data.map((d, i) =>
           <tr key={i}>
-            <td>{valor.nome}</td>
+            <td style={{background:props.data?.filter((f)=>f.detalhes === d.detalhes && f.valor === d.valor).length == 1 ? "none" : "yellow"}} >{d.nome}</td>
             <td>
-              {valor.data.erro != null ? (
-                <h3>{valor.data.erro}</h3>
+              {d.erro != null ? (
+                <h3>{d.erro}</h3>
               ) : (
-                <a href={valor.url}>{valor.site}</a>
+                <a href={d.url}>{d.site.nome}</a>
               )}
             </td>
-            <td>{valor.data.valor}</td>
+            <td>{d.valor}</td>
+            <td>{d.detalhes}</td>
           </tr>
         )}
       </tbody>

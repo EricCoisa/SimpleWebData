@@ -1,9 +1,11 @@
-import { Lojas } from "../Collect/Lojas";
-import { Data } from "./data";
+import { ILoja } from "./lojas";
 
 export type Busca = {
+    site : ILoja,
     nome : string,
-    site : Lojas,
     url : string,
-    data : Data,
+    
+    detalhes? : string,
+    valor? : string
+    erro? : string
 }
